@@ -16,7 +16,12 @@ export default function StatusDisplay() {
 
   const fetchStatus = async () => {
     try {
-      const response = await fetch('/api/status');
+      const response = await fetch('/api/status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const data = await response.json();
       if (response.ok) {
         setStatus(data);

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET() {
+export async function POST() {
   try {
     console.log('Fetching status...');
     const [prize, totalEntries, winnerCount] = await Promise.all([
