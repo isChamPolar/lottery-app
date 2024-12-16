@@ -24,24 +24,10 @@ export default function Home() {
       setUserId(entry.userId);
       setResult(entry.result);
     } else {
-      // 新しいユーザーIDを取得
-      fetchNewUserId();
+      const newUserId = crypto.randomUUID();
+      setUserId(newUserId);
     }
   }, []);
-
-  const fetchNewUserId = async () => {
-    try {
-      const response = await fetch('/api/user');
-      const data = await response.json();
-      if (response.ok) {
-        setUserId(data.userId);
-      } else {
-        setError('ユーザーIDの取得に失敗しました');
-      }
-    } catch (err) {
-      setError('ユーザーIDの取得中にエラーが発生しました');
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
