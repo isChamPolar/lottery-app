@@ -20,6 +20,10 @@ export async function GET() {
       totalEntries,
       winnerCount,
       remainingStock: prize?.stockCount || 0,
+    }, {
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
     });
   } catch (error) {
     console.error('Error fetching status:', error);

@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     }
 
     // 当選確率50%で抽選
-    const isWinner = Math.random() < 0.5;
+    const isWinner = Math.random() < 0.7;
 
     if (!isWinner) {
       const entry = await prisma.lotteryEntry.create({
