@@ -37,7 +37,3 @@ next-env.d.ts
 
 # Prisma
 /prisma/migrations/
-
-# Docker volumes
-postgres_data/
-dynamodb_data/

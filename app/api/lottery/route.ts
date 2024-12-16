@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
+    console.log('Starting lottery process...');
     const { userId } = await request.json();
 
     if (!userId) {
@@ -22,6 +21,7 @@ export async function POST(request: Request) {
     });
 
     if (existingEntry) {
+      console.log('Existing entry found:', existingEntry);
       return NextResponse.json({
         message: '既に抽選に参加済みです',
         entry: existingEntry,
@@ -38,6 +38,7 @@ export async function POST(request: Request) {
     });
 
     if (!availablePrize) {
+      console.log('No available prizes');
       return NextResponse.json({ message: '申し訳ありません。景品の在庫が終了しました。' });
     }
 
@@ -55,6 +56,7 @@ export async function POST(request: Request) {
           prize: true,
         },
       });
+      console.log('Created losing entry:', entry);
       return NextResponse.json({ message: '残念ながら落選しました', entry });
     }
 
@@ -86,6 +88,7 @@ export async function POST(request: Request) {
       }),
     ]);
 
+    console.log('Created winning entry:', { entry, winningNumber });
     return NextResponse.json({
       message: 'おめでとうございます！当選しました！',
       entry,
@@ -95,7 +98,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error in lottery API:', error);
     return NextResponse.json(
-      { error: '抽選処理中にエラ��が発生しました' },
+      { error: '抽選処理中にエラーが発生しました' },
       { status: 500 }
     );
   }

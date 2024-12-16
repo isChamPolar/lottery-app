@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
+    console.log('Fetching status...');
     const [prize, totalEntries, winnerCount] = await Promise.all([
       prisma.prize.findFirst(),
       prisma.lotteryEntry.count(),
@@ -15,6 +14,7 @@ export async function GET() {
       })
     ]);
 
+    console.log('Status fetched:', { prize, totalEntries, winnerCount });
     return NextResponse.json({
       prize,
       totalEntries,
